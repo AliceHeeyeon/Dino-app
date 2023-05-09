@@ -2,8 +2,8 @@ const showAll = document.getElementById("show-all");
 const deleteAll = document.getElementById("delete-all");
 const resultBox = document.getElementById("result-box");
 const modal = document.getElementById("modal");
+const modalContent = document.getElementById("modal-content");
 const closeBtn = document.getElementById("close-btn");
-
 
 let dino = [
     {
@@ -43,39 +43,50 @@ deleteAll.addEventListener("click", function () {
 })
 
 
-
 function showDino() {
     for (let i = 0; i < dino.length; i++) {
         resultBox.innerHTML += `
         <div id="result">
         <img src=${dino[i].image} alt=${dino[i].alt}>
-        <div>
+        <div class="result-element">
         <h2>${dino[i].name}</h2>
         <p>${dino[i].rating}</p>
         <button data-id=${dino[i].id} 
-        class="more-info">
+        class="moreinfo-btn">
         More info
         </button>
         </div>
+        
         </div>
         `
     }
     collectButtons()
 }
 
+function openModal() {
+    modal.classList.toggle("active");
+}
+closeBtn.addEventListener("click", function () {
+    openModal()
+})
+
 function collectButtons() {
-    const moreInfo = document.getElementsByClassName("more-info");
-    for (let i = 0; i < moreInfo.length; i++) {
-        moreInfo[i].addEventListener("click", function () {
-            console.log("button clicked");
+    const moreInfoBtn = document.getElementsByClassName("moreinfo-btn");
+    for (let i = 0; i < moreInfoBtn.length; i++) {
+        moreInfoBtn[i].addEventListener("click", function () {
+            let currentButtonId = moreInfoBtn[i].dataset.id;
+            let modalValue = dino[currentButtonId].description;
+            let modalName = dino[currentButtonId].name;
+            modalContent.innerHTML = `
+            <h1>About ${modalName}</h1>
+            <p>${modalValue}<p>
+            `
+            openModal();
+
         })
     }
 }
 
 
-
-
-
-//
 
 
